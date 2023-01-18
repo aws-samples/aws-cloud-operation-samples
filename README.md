@@ -1,4 +1,4 @@
-## aws-operational-excellence-best-practices-with-aws-lambda
+## aws-cloud-operation-samples
 
 This repository contains a collection of AWS Lambda function samples perform common Cloud Operations for services including: CloudWatch, IAM, RDS and more.
 
