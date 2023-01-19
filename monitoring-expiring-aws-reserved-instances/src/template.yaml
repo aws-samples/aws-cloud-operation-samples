@@ -1,0 +1,120 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'CloudFormation template for creating CloudWatch Alarm and associated SNS topic to notify by email when threshold has been triggered.'
+
+Parameters:
+  SNSTopicName:
+    Description: Please enter a SNS Topic Name For Alarm Notifications.
+    Default: SNSTopic-ReservedInstanceExpiringSoon
+    Type: String
+    ConstraintDescription: Please enter a SNS Topic Name For Alarm Notifications.
+  
+  SNSNotificationEmail:
+    Description: Please enter notifier email address.
+    Type: String
+    ConstraintDescription: Please enter notifier email address.
+    Default: example@example.com
+  
+  CloudWatchAlarmName:
+    Default: CWAlarm-ReservedInstanceExpiringSoon
+    Description: Please enter name for CloudWatch Billing Alarm (no spaces and only underscores permitted).
+    Type: String
+  
+  CloudWatchAlarmThreshold:
+    Default: 30
+    Description: Please enter a whole number (e.g. 30) for the CloudWatch alarm threshold.
+    Type: String
+    AllowedPattern: '[0-9][0-9]*'
+    ConstraintDescription: Please enter a whole number (e.g. 30)
+  
+  ReservedInstanceId:
+    Description: Please enter Reserved Instance Id for tracking days remaining (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+    Default: 00000000-0000-0000-0000-000000000000
+    Type: String
+    ConstraintDescription: Please enter Reserved Instance Id for tracking days remaining.
+  
+  RIDaysRemainingLambdaFunction:
+    Description: Please enter Lambda function ARN for Reserved Instance days remaining checking.
+    Default: 'arn:aws:lambda:us-east-1:111122223333:function:IdentifySoonExpiringReservedInstances'
+    ConstraintDescription: Please enter Lambda function ARN for Reserved Instance days remaining checking.
+    Type: String
+
+Resources:
+  SNSTopic:
+    Type: 'AWS::SNS::Topic'
+    Properties:
+      Subscription:
+        - Endpoint: !Ref SNSNotificationEmail
+          Protocol: email
+      TopicName: !Ref SNSTopicName
+  
+  CloudWatchAlarm:
+    Type: 'AWS::CloudWatch::Alarm'
+    Properties:
+      AlarmName: !Ref CloudWatchAlarmName
+      AlarmDescription: !Join 
+        - ''
+        - - >-
+            CloudWatch Alarm that triggers a notification via the SNS topic when
+            the threshold is below:
+          - !Ref CloudWatchAlarmThreshold
+          - ' days.'
+      MetricName: RIExpireCountdown
+      Namespace: AWS/ReservedInstances
+      Statistic: Maximum
+      Period: '86400'
+      EvaluationPeriods: '1'
+      Threshold: !Ref CloudWatchAlarmThreshold
+      ComparisonOperator: LessThanThreshold
+      AlarmActions:
+        - !Ref SNSTopic
+      Dimensions:
+        - Name: Reserved Instance Id
+          Value: !Ref ReservedInstanceId
+      InsufficientDataActions:
+        - !Ref SNSTopic
+  
+  EventBridgeScheduleRule:
+    Type: 'AWS::Events::Rule'
+    Properties:
+      Description: "EventBridge rule for invoking lambda function every day"
+      ScheduleExpression: "cron(0 13 * * ? *)"
+      State: "ENABLED"
+      Targets:
+        - 
+          Arn: !Ref 'RIDaysRemainingLambdaFunction'
+          Id: "TargetFunctionV1"
+  
+  PermissionForEventsToInvokeLambda:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !Ref 'RIDaysRemainingLambdaFunction'
+      Action: 'lambda:InvokeFunction'
+      Principal: events.amazonaws.com
+      SourceArn:
+        Fn::GetAtt:
+          - "EventBridgeScheduleRule"
+          - "Arn"
+
+Outputs:
+  SNSTopicARN:
+    Description: SNS Topic ARN
+    Value: !Ref SNSTopic
+    Export:
+      Name: !Sub '${AWS::StackName}:SNSTopic-ARN'
+  
+  CloudWatchAlarmURL:
+    Description: CloudWatch Alarm  URL
+    Value: !Join 
+      - ''
+      - - 'https://console.aws.amazon.com/cloudwatch/home?region='
+        - !Ref 'AWS::Region'
+        - '#alarmsV2:alarm/'
+        - !Ref CloudWatchAlarmName
+    Export:
+      Name: !Sub '${AWS::StackName}:CloudWatchAlarm-URL'
+  
+  CloudWatchAlarmARN:
+    Description: CloudWatch Alarm ARN
+    Value: !GetAtt CloudWatchAlarm.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}:CloudWatchAlarm-ARN'
