@@ -10,7 +10,7 @@ The following solution enables users to receive an email notification when the A
 The following diagram illustrates the architecture in this post:
 
 <p align='center'>
-	<img src='imgs/0_SolutionArchitecture.png' alt='Solution Architecture Diagram'/>
+	<img src='img/0_SolutionArchitecture.png' alt='Solution Architecture Diagram'/>
 </p>
 
 1.	CloudFormation deploys the EventBridge rule, Amazon SNS topic, CloudWatch alarm, and Lambda Invocation Permission.
