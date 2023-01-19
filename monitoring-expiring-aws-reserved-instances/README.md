@@ -22,9 +22,9 @@ The following diagram illustrates the architecture in this post:
 ## Prerequisites
 
 You must have the following:
-	•	An AWS account with AWS Identity and Access Management (IAM) permissions to access CloudWatch, EventBridge, Lambda, and Amazon SNS.
-	•	IAM permissions for CloudFormation to deploy the template.
-	•	An IAM role created for the Lambda function with least privilege access to CloudWatch and EventBridge.
+1. An AWS account with AWS Identity and Access Management (IAM) permissions to access CloudWatch, EventBridge, Lambda, and Amazon SNS.
+2. IAM permissions for CloudFormation to deploy the template.
+3. An IAM role created for the Lambda function with least privilege access to CloudWatch and EventBridge.
 
 When testing, make sure that you deploy this solution into an AWS account with an active Amazon EC2 Reserved Instance.
 
