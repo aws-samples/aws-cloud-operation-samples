@@ -29,4 +29,4 @@ You must have the following:
 When testing, make sure that you deploy this solution into an AWS account with an active Amazon EC2 Reserved Instance.
 
 ## Deployment Instructions
-First, deploy the lambda_function.py Lambda function found in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/tree/main/monitoring-expiring-aws-reserved-instances/src">src</a> folder. You can then deploy the template.yaml file also located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/tree/main/monitoring-expiring-aws-reserved-instances/src">src</a> folder.
+First, deploy the lambda_function.py Lambda function found in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/tree/main/monitoring-expiring-amazon-reserved-instances/src">src</a> folder. You can then deploy the template.yaml file also located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/tree/main/monitoring-expiring-amazon-reserved-instances/src">src</a> folder.
