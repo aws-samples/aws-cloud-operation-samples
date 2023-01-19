@@ -18,4 +18,4 @@ You need an AWS account with the IAM permissions required to access Amazon Cloud
 You will also need IAM permissions to AWS CloudFormation if you plan to deploy the sample template.
 
 ## Deployment Instructions
-You can deploy the solution using the template.yaml file located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/tree/main/creating-an-amazon-cloudwatch-billing-alarm-to-monitor-estimated-charges/src">src</a> folder.
+You can deploy the solution using the template.yaml file located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/blob/main/monitoring-estimated-charges-using-amazon-cloudwatch/src/template.yaml">src</a> folder.
