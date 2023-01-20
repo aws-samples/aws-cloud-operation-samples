@@ -1,11 +1,12 @@
-## Using Custom Amazon CloudWatch Metrics to Monitor Amazon EC2 Reserved Instance Expiration
+## Setting up an Amazon CloudWatch Billing Alarm to Proactively Monitor Estimated Charges
 
-This solution deploys a custom Amazon CloudWatch metric published via an AWS Lambda function and an Amazon Simple Notification Service (Amazon SNS) topic for notification when the alarm exceeds the user-defined threshold to allow monitoring of the days remaining for Amazon EC2 Reserved Instances.
+This solution deploys an Amazon CloudWatch Billing alarm, and connects the Amazon CloudWatch Billing alarm to an Amazon SNS topic for notifications when the alarm exceeds the specified threshold.
 
-CloudWatch allows you to monitor CloudWatch custom metrics (Amazon EC2 Reserved Instance days remaining) to deliver better insights into your resources and provide you with notifications when the defined threshold you configure is breached.
+Amazon CloudWatch is a monitoring and observability service that provides a unified view of your application’s performance, resource utilization, and performance changes. Amazon CloudWatch is ideal for improving operational performance and resource optimization, such as creating alarms to notify you when your billing charges are exceeding a predefined threshold.
+
+By using Amazon CloudWatch, you can better monitor your estimated AWS charges. By monitoring the estimated AWS charges for your AWS account(s), you can be alerted and proactively notified when the calculated estimated charges exceed the defined threshold, both from the AWS CloudWatch console and via SNS Notification.
 
 ## Solution Overview
-The following solution enables users to receive an email notification when the Amazon EC2 Reserved Instance has fewer days remaining than a specified threshold. This solution uses CloudWatch, Amazon SNS, Amazon EventBridge, AWS CloudFormation, and Lambda.
 
 The following diagram illustrates the architecture in this post:
 
@@ -13,20 +14,9 @@ The following diagram illustrates the architecture in this post:
 	<img src='img/0_SolutionArchitecture.png' alt='Solution Architecture Diagram'/>
 </p>
 
-1.	CloudFormation deploys the EventBridge rule, Amazon SNS topic, CloudWatch alarm, and Lambda Invocation Permission.
-2.	EventBridge invokes the Lambda function on the user-defined cadence.
-3.	Lambda adds a custom metric (RI Days remaining) to CloudWatch metrics when invoked.
-4.	CloudWatch alarm sends a notification to Amazon SNS when in the alarm state.
-5.	Amazon SNS emails the user that the Amazon EC2 Reserved Instance is less than the user-defined parameter.
-
 ## Prerequisites
-
-You must have the following:
-1. An AWS account with AWS Identity and Access Management (IAM) permissions to access CloudWatch, EventBridge, Lambda, and Amazon SNS.
-2. IAM permissions for CloudFormation to deploy the template.
-3. An IAM role created for the Lambda function with least privilege access to CloudWatch and EventBridge.
-
-When testing, make sure that you deploy this solution into an AWS account with an active Amazon EC2 Reserved Instance.
+1. You need an AWS account with the IAM permissions required to access Amazon CloudWatch, Billing & Cost Management Console, and Amazon SNS.
+2. You will also need IAM permissions to AWS CloudFormation if you plan to deploy the sample template.
 
 ## Deployment Instructions
-First, deploy the lambda_function.py Lambda function found in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/tree/main/monitoring-expiring-amazon-reserved-instances/src">src</a> folder. You can then deploy the template.yaml file also located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/tree/main/monitoring-expiring-amazon-reserved-instances/src">src</a> folder.
+You can deploy the solution using the template.yaml file located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/blob/main/monitoring-estimated-charges-using-amazon-cloudwatch/src/template.yaml">src</a> folder.
