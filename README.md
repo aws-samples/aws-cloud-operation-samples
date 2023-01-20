@@ -1,6 +1,6 @@
 ## aws-cloud-operation-samples
 
-This repository contains a collection of AWS Lambda function samples perform common Cloud Operations for services such as: CloudWatch, IAM, RDS and more.
+This repository contains a collection of AWS Lambda functions and AWS CloudFormation template samples to perform common Cloud Operations for services such as: CloudWatch, IAM, RDS and more.
 
 The samples are designed to educate AWS customers on how to deploy cloud operations at scale. They are organized by service, although some of the samples maybe be leveraging multiple services.
 
