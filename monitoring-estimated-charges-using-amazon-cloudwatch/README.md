@@ -19,4 +19,4 @@ The following diagram illustrates the architecture in this post:
 2. You will also need IAM permissions to AWS CloudFormation if you plan to deploy the sample template.
 
 ## Deployment Instructions
-You can deploy the solution using the template.yaml file located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/blob/main/monitoring-estimated-charges-using-amazon-cloudwatch/src/template.yaml">src</a> folder.
+You can deploy the solution using the template.yaml file located in the <a href="https://github.com/aws-samples/aws-cloud-operation-samples/blob/main/monitoring-estimated-charges-using-amazon-cloudwatch/src">src</a> folder.
