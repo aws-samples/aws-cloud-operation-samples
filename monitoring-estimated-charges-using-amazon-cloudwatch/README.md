@@ -1,4 +1,4 @@
-## Setting up an Amazon CloudWatch Billing Alarm to Proactively Monitor Estimated Charges
+## <a href="https://aws.amazon.com/blogs/mt/setting-up-an-amazon-cloudwatch-billing-alarm-to-proactively-monitor-estimated-charges/">Setting up an Amazon CloudWatch Billing Alarm to Proactively Monitor Estimated Charges</a>
 
 This solution deploys an Amazon CloudWatch Billing alarm, and connects the Amazon CloudWatch Billing alarm to an Amazon SNS topic for notifications when the alarm exceeds the specified threshold.
 
